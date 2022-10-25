@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="com-md-2" xmlns="http://www.w3.org/1999/html">
+    {% if books.image_file %}
+        <img src="{{ url_for('static' , filename='images/' + books.image_file)}}" width="150" align="top">
+    {% else %}
+        <img src="{{ url_for('static' , filename='images/' + books.image_file)}}" width="150" align="left">
+    {% endif %}
+</div>
+<div>
+    <h1>{{ books.book_name }}</h1>
+            <div class="card-body">
+                <p><b>Book db number: {{ books.id }}</b></p>
+                <h5 class="border-bottom">Book author(s): {{ books.author.name }}</h5>
+                {% for review in books.review %}
+                    <div class="border-bottom col-md-6">
+                        <p class="card-text">Review id: {{ review.id }}</p>
+                        <p class="card-text">
+                            {% if review.content %}
+                                {{ review.content|safe }}
+                            {% else %}
+                                Book do not have any review...
+                            {% endif %}
+                        </p>
+                        <p class="card-text">Created: {{ review.date_posted }}</p>
+                    </div> </br>
+                {% endfor %}
+
+    </div>
+</div>
+{% endblock %}

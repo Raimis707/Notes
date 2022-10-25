@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% block content %}
+
+</b></b>
+<div class="text-center">
+    <h4>There is all available books!</h4>
+</div>
+<div class="d-flex flex-wrap justify-content-center">
+    {% if all_books %}
+    {% for books in all_books %}
+    {% if books.user.id == null %}
+    <div class="col-5 col-sm-4 p-3 m-3 border border-dark">
+        <div class="com-md-2" xmlns="http://www.w3.org/1999/html">
+            {% if books.image_file %}
+                <img src="{{ url_for('static' , filename='images/' + books.image_file)}}" width="100" align="center">
+            {% else %}
+                <img src="{{ url_for('static' , filename='images/ default.jpg')}}" width="100" align="center">
+            {% endif %}
+        </div>
+        <div class="m-3">
+            <p>Book name:</p>
+            <h3 class="text-center"><a href="{{ url_for('book', books_id=books.id)}}" class="link-primary"><strong>{{ books.book_name }}</strong></a></h3>
+            <p>Author:</p>
+            <h4 class="text-center"><strong>{{books.author.name}}</strong></h4>
+        </div>
+        <div class="d-flex flex-column mt-auto">
+            <a class="btn btn-dark m-2" href="{{ url_for('borrow', id=books['id']) }}">Borrow</a>
+        </div>
+    </div>
+{% endif %}
+{% endfor %}
+{% endif %}
+</div>
+{% endblock %}
