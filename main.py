@@ -96,6 +96,8 @@ class Review(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     user = db.relationship("User")
     books_id = db.Column(db.Integer, db.ForeignKey('books.id'))
+    book_name = db.relationship("Books")
+
 
     def __repr__(self):
         return f'<Review "{self.content[:20]}...">'
@@ -125,14 +127,24 @@ def home():
     return render_template('home.html', reviews=reviews, form=form)
 
 
-@app.route('/available_books', methods=['POST', 'GET'])
+# @app.route('/available_books', methods=['POST', 'GET'])
+# @login_required
+# def available_books():
+#     try:
+#         all_books = Books.query.all()
+#     except:
+#         all_books = []
+#     return render_template("available_books.html", all_books=all_books)
+
+
+@app.route('/edit_category', methods=['POST', 'GET'])
 @login_required
 def available_books():
     try:
         all_books = Books.query.all()
     except:
         all_books = []
-    return render_template("available_books.html", all_books=all_books)
+    return render_template("edit_category.html", all_books=all_books)
 
 
 @app.route('/my_books', methods=['POST', 'GET'])
@@ -227,10 +239,10 @@ def update_account_information():
 def add_new_book():
     form = forms.AddNewBookForm()
     if form.validate_on_submit():
-        add_new_book = Books(book_name=form.book_name.data, author_id=form.author.data.id)
+        add_new_book = Books(book_name=form.book_name.data)
         db.session.add(add_new_book)
         db.session.commit()
-        flash('Success, new book added')
+        flash('Success, new category added')
         return redirect(url_for('add_new_book'))
     return render_template('add_new_book.html', form=form)
 
@@ -271,24 +283,43 @@ def delete_review(id):
         return render_template("read_review.html", review=review)
 
 
+@app.route('/review/edit/<int:id>', methods=['GET', 'POST'])
+@login_required
+def edit_review(id):
+    review = Review.query.get_or_404(id)
+    form = forms.AddNewReviewForm()
+    if form.validate_on_submit():
+        review.book_name = form.book_name.data
+        review.content = form.content.data
+        db.session.add(review)
+        db.session.commit()
+        flash("Note Has Been Updated!")
+        return redirect(url_for('read_review', id=review.id))
+
+    else:
+        form.book_name.data = review.books_id
+        form.content.data = review.content
+        return render_template('edit_review.html', form=form)
+
+
+    # review = Review.query.get_or_404(id)
+    # form = forms.AddNewReviewForm()
+    # if request.method == 'GET':
+    #     form.book_name.data = review.books_id
+    #     form.content.data = review.content
+    # if form.validate_on_submit():
+    #     review.book_name = form.book_name.data
+    #     review.content = form.content.data
+    #     db.session.add(review)
+    #     db.session.commit()
+    #     flash('Note information updated', 'success')
+    # return render_template('edit_review.html', form=form)
+
+
 @app.route('/<int:books_id>/')
 def book(books_id):
     book = Books.query.get_or_404(books_id)
     return render_template('book.html', books=book)
-
-
-# Create Search Function
-@app.route('/search', methods=['GET', 'POST'])
-def search():
-    form = forms.SearchForm()
-    review = Review.query
-    if form.validate_on_submit():
-        # Get data from submitted form
-        review.searched = form.searched.data
-        # Query the Database
-        review = review.filter(Review.content.like('%' + review.searched + '%'))
-        # review = review.order_by(Review.title).all()
-    return render_template("search.html", form=form, searched=review.searched, review=review)
 
 
 if __name__ == '__main__':

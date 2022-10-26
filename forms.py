@@ -20,9 +20,7 @@ def books_query():
 
 class AddNewBookForm(FlaskForm):
     book_name = StringField('Book name', [DataRequired()])
-    author = QuerySelectField(query_factory=author_query, allow_blank=True, get_label="name",
-                              get_pk=lambda obj: str(obj))
-    submit = SubmitField('Add New Book')
+    submit = SubmitField('Add New Category')
 
     def validate_book_name(self, book_name):
         books = main.Books.query.filter_by(book_name=self.book_name.data).first()
@@ -68,9 +66,3 @@ class UpdateAccountInformationForm(FlaskForm):
             user = main.User.query.filter_by(email_address=self.email_address.data).first()
             if user:
                 raise ValidationError('Email already exists. Sign in or use another email address.')
-
-
-# Create A Search Form
-class SearchForm(FlaskForm):
-    searched = StringField("Searched", validators=[DataRequired()])
-    submit = SubmitField("Submit")

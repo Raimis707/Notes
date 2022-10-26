@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% block content %}
+<br/>
+<h2>Edit Note...</h2>
+<br/>
+    <div class="content-section">
+
+        <form method="POST" action="">
+            {{ form.hidden_tag() }}
+            <fieldset class="form-group">
+                <div class="form-group">
+                    Your note new category....
+                    {% if form.content.errors %}
+                    {{ form.book_name(class="form-control form-control-lg is-invalid") }}
+                    <div class="invalid-feedback">
+                        {% for error in form.book_name.errors %}
+                        <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                    {% else %}
+                    {{ form.book_name(class="form-control form-control-lg") }}
+                    {% endif %}
+                    </div>
+            </br>
+                <div class="form-group">
+                    Your new note text....
+                    {% if form.content.errors %}
+                    {{ form.content(class="form-control form-control-lg is-invalid") }}
+                    <div class="invalid-feedback">
+                        {% for error in form.content.errors %}
+                        <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                    {% else %}
+                    {{ form.content(class="form-control form-control-lg") }}
+                    {% endif %}
+                </div>
+</br>
+            </fieldset>
+            <div class="form-group">
+                {{ form.submit(class="btn btn-outline-info") }}
+            </div>
+        </form>
+    </div>
+</br>
+<a href="{{ url_for('read_review')}}" class="btn btn-outline-secondary btn-sm">Back To Notes</a>
+{% endblock %}

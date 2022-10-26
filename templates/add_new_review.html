@@ -2,14 +2,16 @@
 {% block content %}
 <div class="content-section">
     <div>
-        <h2 class="account-heading">{{ current_user.first_name }}</h2>
+        <h2 class="account-heading">{{ current_user.first_name }}, please add new note</h2>
     </div>
+    <br/>
     <form method="POST" action="">
         {{ form.hidden_tag() }}
         <fieldset class="form-group">
-            <legend class="border-bottom mb-4">Add New Review</legend>
+<!--            <legend class="border-bottom mb-4">Add New Note</legend>-->
             <div class="form-group">
-                {{ form.book_name.label(class="form-control-label") }}
+                <a>Choose Category</a>
+<!--                {{ form.book_name.label(class="form-control-label") }}-->
                 {% if form.book_name.errors %}
                 {{ form.book_name(class="form-control form-control-lg is-invalid") }}
                 <div class="invalid-feedback">
@@ -21,8 +23,10 @@
                 {{ form.book_name(class="form-control form-control-lg") }}
                 {% endif %}
             </div>
+            </br>
             <div class="form-group">
-                {{ form.content.label(class="form-control-label") }}
+                <a>Your Note text...</a>
+<!--                {{ form.content.label(class="form-control-label") }}-->
                 {% if form.content.errors %}
                 {{ form.content(class="form-control form-control-lg is-invalid") }}
                 <div class="invalid-feedback">
@@ -35,6 +39,7 @@
                 {% endif %}
             </div>
         </fieldset>
+        <br/>
         <div class="form-group">
             {{ form.submit(class="btn btn-outline-info") }}
         </div>
