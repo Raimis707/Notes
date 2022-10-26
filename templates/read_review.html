@@ -15,8 +15,8 @@
     {% if review.user.id == current_user.id %}
     <div class="col-5 col-sm-4 p-3 m-3 border border-dark">
         <div class="m-3">
-            <p>Category name:</p>
-            <h3 class="text-center"><strong>{{ review.book_name }}</strong></h3>
+            <p>Category</p>
+            <h5 class="text-center"><strong>{{ review.book_name }}</strong></h5>
             </br>
             <p>Your Note</p>
             <h4 class="text-center"><strong>{{ review.content }}</strong></h4>

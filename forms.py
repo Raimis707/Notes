@@ -19,7 +19,7 @@ def books_query():
 
 
 class AddNewBookForm(FlaskForm):
-    book_name = StringField('Book name', [DataRequired()])
+    book_name = StringField('Category name', [DataRequired()])
     submit = SubmitField('Add New Category')
 
     def validate_book_name(self, book_name):
@@ -31,7 +31,7 @@ class AddNewBookForm(FlaskForm):
 class AddNewReviewForm(FlaskForm):
     book_name = QuerySelectField(query_factory=books_query, allow_blank=True, get_label="book_name",
                                  get_pk=lambda obj: str(obj))
-    content = StringField('Review', [DataRequired()])
+    content = StringField('Note text', [DataRequired()])
     submit = SubmitField('Submit')
 
 

@@ -2,24 +2,14 @@
 {% block content %}
 <h1></h1>
 <div>
-    <div class="position-relative">
-<!--            <div class="position-absolute top-0 start-0 d-flex flex-column mt-auto">-->
-<!--               {% if current_user.is_authenticated %}-->
-<!--               <a class="btn btn-dark m-2" href="www.delfi.lt">Category</a>-->
-<!--               {% else %}-->
-<!--               <a class="btn btn-dark m-2" href="www.lrytas.lt">Category</a>-->
-<!--               {% endif %}-->
-<!--            </div>-->
-    </div>
-
-    <div class="content-section">
+     <div class="content-section">
     <div>
-        <h2 class="account-heading">{{ current_user.first_name }}</h2>
+        <h2 class="account-heading">Welcome, {{ current_user.first_name }}, add your note</h2>
     </div>
     <form method="POST" action="">
         {{ form.hidden_tag() }}
         <fieldset class="form-group">
-            <legend class="border-bottom mb-4">Add New Review</legend>
+<!--            <legend class="border-bottom mb-4">Add New Note</legend>-->
             <div class="form-group">
                 {{ form.book_name.label(class="form-control-label") }}
                 {% if form.book_name.errors %}
@@ -45,6 +35,10 @@
                 {% else %}
                 {{ form.content(class="form-control form-control-lg") }}
                 {% endif %}
+            </div>
+            <div class="form-group">
+            <label for="review">Comment:</label>
+            <textarea class="form-control" rows="5" id="review"></textarea>
             </div>
         </fieldset>
         <div class="form-group">

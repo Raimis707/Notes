@@ -68,7 +68,7 @@ class Books(db.Model):
     user = db.relationship("User")
     author_id = db.Column(db.Integer, db.ForeignKey("author.id"))
     author = db.relationship("Author")
-    review = db.relationship('Review', backref='books')
+
 
     def __repr__(self):
         return f'<Books {self.book_name}>'
@@ -250,7 +250,6 @@ def add_new_book():
 @app.route('/sign_out')
 def sign_out():
     logout_user()
-    flash('Goodbye, see you next time', 'success')
     return redirect(url_for('home'))
 
 
@@ -262,7 +261,7 @@ def review():
         review = Review(books_id=form.book_name.data.id, content=form.content.data, user_id=current_user.id)
         db.session.add(review)
         db.session.commit()
-        flash('Success, new review added')
+        flash('Success, new note added')
         return redirect(url_for('review'))
     return render_template('add_new_review.html', form=form)
 
@@ -276,7 +275,7 @@ def delete_review(id):
         db.session.commit()
         flash("Note Was Deleted!")
         review = Review.query.order_by(Review.date_posted)
-        return render_template("read_review.html", review=review)
+        return redirect(url_for('read_review', review=review))
     except:
         flash("Whoops! There was a problem deleting note, try again...")
         review = Review.query.order_by(Review.date_posted)
@@ -289,7 +288,7 @@ def edit_review(id):
     review = Review.query.get_or_404(id)
     form = forms.AddNewReviewForm()
     if form.validate_on_submit():
-        review.book_name = form.book_name.data
+        review.books_id = form.book_name.data.id
         review.content = form.content.data
         db.session.add(review)
         db.session.commit()
@@ -297,7 +296,6 @@ def edit_review(id):
         return redirect(url_for('read_review', id=review.id))
 
     else:
-        form.book_name.data = review.books_id
         form.content.data = review.content
         return render_template('edit_review.html', form=form)
 
