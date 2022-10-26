@@ -69,9 +69,8 @@ class Books(db.Model):
     author_id = db.Column(db.Integer, db.ForeignKey("author.id"))
     author = db.relationship("Author")
 
-
     def __repr__(self):
-        return f'<Books {self.book_name}>'
+        return f'{self.book_name}'
 
 
 class Category(db.Model):
@@ -97,7 +96,6 @@ class Review(db.Model):
     user = db.relationship("User")
     books_id = db.Column(db.Integer, db.ForeignKey('books.id'))
     book_name = db.relationship("Books")
-
 
     def __repr__(self):
         return f'<Review "{self.content[:20]}...">'
@@ -298,7 +296,6 @@ def edit_review(id):
     else:
         form.content.data = review.content
         return render_template('edit_review.html', form=form)
-
 
     # review = Review.query.get_or_404(id)
     # form = forms.AddNewReviewForm()
