@@ -4,7 +4,6 @@
 <h2>Edit Note...</h2>
 <br/>
     <div class="content-section">
-
         <form method="POST" action="">
             {{ form.hidden_tag() }}
             <fieldset class="form-group">
@@ -21,7 +20,7 @@
                     {{ form.book_name(class="form-control form-control-lg") }}
                     {% endif %}
                     </div>
-            </br>
+                    </br>
                 <div class="form-group">
                     Your new note text....
                     {% if form.content.errors %}
@@ -35,7 +34,7 @@
                     {{ form.content(class="form-control form-control-lg") }}
                     {% endif %}
                 </div>
-</br>
+                </br>
             </fieldset>
             <div class="form-group">
                 {{ form.submit(class="btn btn-outline-info") }}

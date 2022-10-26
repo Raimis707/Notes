@@ -1,6 +1,5 @@
 {% extends "base.html" %}
 {% block content %}
-
 </b></b>
 <div class="text-center">
     <h4>There is all available categories</h4>
@@ -9,18 +8,16 @@
     {% if all_books %}
     {% for books in all_books %}
     {% if books.user.id == null %}
-    <div class="col-5 col-sm-4 p-3 m-3 border border-dark">
+    <div class="col-5 col-sm-4 p-3 m-3 border border-dark rounded-2 bg-light">
         <div class="m-3">
             <p>Category</p>
             <h3 class="text-center"><strong>{{ books.book_name }}</strong></a></h3>
         </div>
-
             <a href="#" class="btn btn-outline-secondary btn-sm">Change Name</a>
             <a href="#" class="btn btn-outline-danger btn-sm">Delete</a>
-
     </div>
-{% endif %}
-{% endfor %}
-{% endif %}
+    {% endif %}
+    {% endfor %}
+    {% endif %}
 </div>
 {% endblock %}
