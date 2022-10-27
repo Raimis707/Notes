@@ -7,7 +7,7 @@
             {% for review in reviews %}
             {% if review.user.id == current_user.id %}
             <div class="col-5 col-sm-4 p-3 m-3 border border-dark rounded-2 bg-light">
-                <div class="m-3">
+                <div>
                     <p>Category</p>
                     <h5 class="text-center"><strong>{{ review.book_name }}</strong></h5>
                     </br>
